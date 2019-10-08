@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { Button } from 'antd';
-
-import Example from '@/index'
+import Example from '@_/index'
 
 class Demo extends Component {
   render() {
@@ -12,6 +11,7 @@ class Demo extends Component {
       <Example/>
     </div>
   }
+
 }
 
 render(<Demo/>, document.querySelector('#demo'));

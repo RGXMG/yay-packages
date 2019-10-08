@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2016",
+    "lib": ["es6", "dom"],
+    "extendedDiagnostics": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "rootDirs": [
+      "/packages", "/test", "/mock","./typings"],
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "paths": {
+      "@/*": ["./packages/*"],
+      "@_/*": ["./packages/yay-request/packages/*"]
+    }
+  },
+  "include": [
+    "./packages", "./types"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "tslint:latest",
+    "tslint-config-prettier"
+  ]
+}

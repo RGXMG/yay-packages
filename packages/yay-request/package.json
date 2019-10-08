@@ -1,5 +1,5 @@
 {
-  "name": "yay-request",
+  "name": "yay-request_copy",
   "version": "1.0.0",
   "description": "yay-request React component",
   "main": "lib/index.js",
@@ -11,7 +11,7 @@
     "umd"
   ],
   "scripts": {
-    "tsc": "tsc --build tsconfig_pro.json",
+    "tsc": "tsc --build ./tsconfig_pro.json",
     "build": "nwb build-react-component --no-demo --copy-files",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
@@ -37,5 +37,8 @@
   "repository": "",
   "keywords": [
     "react-component"
-  ]
+  ],
+  "dependencies": {
+    "typescript": "^3.6.3"
+  }
 }

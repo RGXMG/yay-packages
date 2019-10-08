@@ -1,0 +1,12 @@
+{
+  "workspaces": [
+    "packages/*"
+  ],
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.16.4",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.3"
+  }
+}
