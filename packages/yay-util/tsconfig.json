@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./packages/*"]
+    }
+  },
+  "include": [
+    "./packages", "./types"]
+}

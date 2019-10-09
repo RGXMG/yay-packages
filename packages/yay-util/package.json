@@ -1,5 +1,5 @@
 {
-  "name": "yay-request_copy",
+  "name": "yay-util_copy",
   "version": "1.0.0",
   "description": "yay-request React component",
   "main": "lib/index.js",
