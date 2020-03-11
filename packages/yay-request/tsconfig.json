@@ -2,9 +2,9 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "paths": {
-      "@/*": ["./packages/*"]
+      "@/*": ["./packages/*"],
+      "@_util/*": ["./packages/*"]
     }
   },
-  "include": [
-    "./packages", "./types"]
+  "include": ["./packages", "./types"]
 }

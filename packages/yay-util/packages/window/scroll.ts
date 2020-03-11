@@ -1,8 +1,14 @@
+interface IOpts {
+  left?: number;
+  top?: number;
+  behavior: 'auto' | 'smooth';
+}
+
 /**
  * 滚动到某个位置
  * @param opts
  */
-var scrollTo = function scrollTo(opts) {
+const scrollTo = function scrollTo(opts: IOpts) {
   window.scrollTo(opts);
 };
 /**
@@ -11,9 +17,7 @@ var scrollTo = function scrollTo(opts) {
  * @param behavior 表现
  * @returns {*}
  */
-var scrollToX = function scrollToX() {
-  var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var behavior = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'smooth';
+const scrollToX = function scrollToX(x: number = 0, behavior: 'auto' | 'smooth' = 'smooth') {
   return scrollTo({ behavior: behavior, left: x - 0 });
 };
 /**
@@ -22,9 +26,7 @@ var scrollToX = function scrollToX() {
  * @param behavior
  * @returns {*}
  */
-var scrollToY = function scrollToY() {
-  var y = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var behavior = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'smooth';
+const scrollToY = function scrollToY(y: number = 0, behavior: 'auto' | 'smooth' = 'smooth') {
   return scrollTo({ behavior: behavior, top: y - 0 });
 };
 export { scrollTo, scrollToX, scrollToY };

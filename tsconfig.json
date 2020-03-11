@@ -8,8 +8,7 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "rootDirs": [
-      "/packages", "/test", "/mock","./typings"],
+    "rootDirs": ["/packages", "/test", "/mock", "./typings"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
@@ -18,11 +17,11 @@
     "experimentalDecorators": true,
     "paths": {
       "@/*": ["./packages/*"],
-      "@_/*": ["./packages/yay-request/packages/*"]
+      "@_request/*": ["./packages/yay-request/packages/*"],
+      "@_util/*": ["./packages/yay-util/packages/*"]
     }
   },
-  "include": [
-    "./packages", "./types"],
+  "include": ["./packages", "./types"],
   "exclude": [
     "node_modules",
     "build",

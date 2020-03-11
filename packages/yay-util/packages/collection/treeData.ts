@@ -1,11 +1,18 @@
 import isFunction from '../function/isFunction';
+import isArrary from '../array/isArray';
 
 interface IOpt<T> {
+  // 自身的标识的属性名称，默认为id
   key?: string;
+  // 直接父对象标识属性名称，默认为pid
   parentKey?: string;
+  // 直接子元素标识属性名称，默认为children
   childrenKey?: string;
+  // 顶层父对象自身的标识的值，默认为0
   topVal?: number | string | boolean | null | undefined;
+  // 提供一个方法，进行筛选整个data
   filterCb?: (args: Array<T>) => Array<T>;
+  // 当遍历每一个对象时，该方法可以删除或者增加属性
   cutCb?: (args: T) => Partial<T>;
 }
 
@@ -16,6 +23,7 @@ interface IOpt<T> {
  * @returns {*}
  */
 function index<T>(data: Array<T>, opt?: IOpt<T>): Object[] {
+  if (!isArrary(data)) throw new Error('treeData: data必须为Array<Object>！');
   const defaultOpts = {
     key: 'id',
     parentKey: 'pid',

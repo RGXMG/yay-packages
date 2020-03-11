@@ -1,3 +1,5 @@
+import isArray from '../array/isArray';
+
 /**
  * 根据配置项找到正确的item 只能用于编辑
  * 如果匹配了父项，就不会再去查找子项
@@ -23,6 +25,9 @@ function index<T>(
     type?: 'm' | 's';
   } = {}
 ): Array<Partial<T>> {
+  if (!isArray(list)) {
+    throw new Error('editItem: list必须是Array<Object>！');
+  }
   const opts = { correctSym: 'id', children: 'children', type: 's', ...opt };
   // opt.type === s 时，使用
   let done = false;

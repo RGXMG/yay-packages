@@ -1,22 +1,26 @@
-import isArray from './isArray';
-import hasEle from './hasEle';
+import isArray from '../array/isArray';
+import hasEle from '../array/hasEle';
+import isObject from '../object/isObject';
 
 /**
  * 树形结构转为扁平化数据
  * @param data
- * @param opts
+ * @param opts {Object} value: { childrenKey: string }, default:{ childrenKey: 'children' }
  * @returns {*}
  */
-function flatten(
+const flatten = function(
   data: Object[],
   opts: {
     childrenKey?: string;
   } = { childrenKey: 'children' }
 ): Array<Object> {
+  if (!isArray(data)) {
+    throw new Error('flatten: data必须是Array<Object>！');
+  }
   const newData = [];
   const findItem = function findItem(d) {
     d.forEach(function(item) {
-      if (isArray(item[opts.childrenKey]) && hasEle(item[opts.childrenKey])) {
+      if (isObject(item) && isArray(item[opts.childrenKey]) && hasEle(item[opts.childrenKey])) {
         const obj = { ...item };
         delete obj[opts.childrenKey];
         newData.push(obj);
@@ -28,5 +32,5 @@ function flatten(
   };
   findItem(data);
   return newData;
-}
+};
 export default flatten;

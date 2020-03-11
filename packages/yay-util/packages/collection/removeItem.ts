@@ -1,3 +1,5 @@
+import isArray from '../array/isArray';
+
 /**
  *
  * @param list 集合
@@ -12,6 +14,9 @@ function index<T>(
     children?: string;
   } = {}
 ): Array<T> {
+  if (!isArray(list)) {
+    throw new Error('removeItem: list必须是Array<Object>！');
+  }
   const opts = { correctSym: 'id', children: 'children', ...opt };
   // 如果为函数调用
   // 返回结果true 不删除

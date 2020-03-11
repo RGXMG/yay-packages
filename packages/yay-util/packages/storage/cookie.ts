@@ -1,5 +1,3 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 import connectEveryProperty from '../object/connectEveryProperty';
 /**
  * 设置cookie值
@@ -8,38 +6,38 @@ import connectEveryProperty from '../object/connectEveryProperty';
  * @param opts cookie的其他设置，如 path、expires等
  * @returns {string}
  */
-var setCookie = function setCookie(name, value, opts) {
-    var _extends2;
-
-    document.cookie = connectEveryProperty(_extends((_extends2 = {}, _extends2[name] = value, _extends2), opts));
+const setCookie = function setCookie(name: string, value: string, opts: Object) {
+  document.cookie = connectEveryProperty({ [name]: value, ...opts });
 };
 /**
  * 通过正则匹配单次读取cookie的值
  * @param name cookie name
  * @returns {string}
  */
-var getCookie = function getCookie(name) {
-    var res = document.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'));
-    return res && res[2];
+const getCookie = function getCookie(name: string) {
+  const res = document.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'));
+  return res && res[2];
 };
 /**
  * 通过正则匹配单次删除cookie的值
  * @param name
  * @param opts domain
  */
-var delCookie = function delCookie(name, opts) {
-    var defaultOpts = _extends({ domain: document.domain, path: '/' }, opts);
-    var exp = new Date();
-    exp.setTime(exp.getTime() - 36e4 * 24);
-    var cval = getCookie(name);
-    if (cval) setCookie(name, cval, {
-        expires: exp.toUTCString(),
-        domain: defaultOpts.domain,
-        path: defaultOpts.path
+const delCookie = function delCookie(name: string, opts: object) {
+  const defaultOpts = { domain: document.domain, path: '/' };
+  const exp = new Date();
+  exp.setTime(exp.getTime() - 36e4 * 24);
+  const cval = getCookie(name);
+  if (cval)
+    setCookie(name, cval, {
+      expires: exp.toUTCString(),
+      domain: defaultOpts.domain,
+      path: defaultOpts.path,
+      ...opts,
     });
 };
 export default {
-    setCookie: setCookie,
-    getCookie: getCookie,
-    delCookie: delCookie
+  setCookie: setCookie,
+  getCookie: getCookie,
+  delCookie: delCookie,
 };

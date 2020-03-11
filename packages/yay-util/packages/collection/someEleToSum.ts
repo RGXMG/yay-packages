@@ -7,9 +7,8 @@ import calculation from '../number/calculation';
  * @param fixed 保留几位小数
  * @returns {*}
  */
-var index = function index(list: any[], key: string, base: number = 0, fixed: number = 2): number {
-  const eles = [base, ...list.map(i => i[key] || 0)];
+const index = (list: any[], key: string, base: number = 0, fixed: number = 2): number => {
   // @ts-ignore
-  return calculation.calculatio(...eles, { fixed: 2 }).plus();
+  return calculation.calculatio(...[base, ...list.map(i => i[key] || 0)], { fixed: 2 }).plus();
 };
 export default index;

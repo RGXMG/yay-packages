@@ -6,8 +6,7 @@
  * @param rep{string} 要替换的内容
  * @returns {*}
  */
-var index = function index(val) {
-  var rep = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '<br/>';
+const index = function index(val: string, rep: string = '<br/>'): string {
   return val.replace(/\r\n|\n/g, rep).replace(/<\s*script\s*>|<\s*\/script\s*>/g, '');
 };
 export default index;

@@ -7,6 +7,6 @@ import getKeys from './getKeys';
  */
 const index = (obj: Object) => {
   if (!hasKv(obj)) return [];
-  return getKeys(obj).map((k, _, obj) => obj[k]);
+  return getKeys(obj).map((k, _) => obj[k]);
 };
 export default index;

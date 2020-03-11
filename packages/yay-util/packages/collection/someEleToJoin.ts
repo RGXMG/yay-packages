@@ -1,4 +1,4 @@
-import isArray from './isArray';
+import isArray from '../array/isArray';
 import isFunction from '../function/isFunction';
 /**
  * 将每一数组的元素中的某个属性按照sym相连接
@@ -9,15 +9,15 @@ import isFunction from '../function/isFunction';
  *        再该回调函数中，可以更改item[pro]值，之后将其更改好的新的item返回
  * @returns {*}
  */
-function index(
+const index = (
   array: Array<any>,
   pro: string = 'label',
   sym: string = '、',
   itemCb: (item: any, i: number, array: Array<any>) => void
-) {
+) => {
   if (!isArray(array)) return null;
   return array
     .map((item, i) => (isFunction(itemCb) ? itemCb(item, i, array) : item)[pro])
     .join(sym);
-}
+};
 export default index;

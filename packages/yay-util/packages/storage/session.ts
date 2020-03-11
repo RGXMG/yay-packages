@@ -2,7 +2,7 @@
  * 从sessionStorage中获取item
  * @param key
  */
-var getSession = function getSession(key) {
+const getSession = function getSession(key: string): any {
   return JSON.parse(sessionStorage.getItem(key));
 };
 /**
@@ -10,10 +10,10 @@ var getSession = function getSession(key) {
  * @param key
  * @param val
  */
-var setSession = function setSession(key, val) {
+const setSession = function setSession(key: string, val: any) {
   return sessionStorage.setItem(key, JSON.stringify(val));
 };
 export default {
   getSession: getSession,
-  setSession: setSession
+  setSession: setSession,
 };

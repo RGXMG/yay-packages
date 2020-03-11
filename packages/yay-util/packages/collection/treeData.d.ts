@@ -9,7 +9,7 @@ interface IOpt<T> {
 /**
  * 扁平化数据转为树形结构
  * @param data
- * @param opt
+ * @param opt {IOpt}
  * @returns {*}
  */
 declare function index<T>(data: Array<T>, opt?: IOpt<T>): any[];

@@ -8,8 +8,8 @@
  * @param cb：比较成功之后的回调函数
  * @param opt {
  *   correctSym:{string|function} 正确项的匹配值, 可以由该函数返回  默认id
- *   children: 下一级的字段名
- *   type: m:多个，会遍项历所有的， s：如果找到一项，就不再查找子项
+ *   children: 下一级的字段名, 默认children
+ *   type: m:多个，会遍项历所有的， s：如果找到一项，就不再查找子项 默认s
  * }
  * @returns {Array}
  */
