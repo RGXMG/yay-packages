@@ -1,7 +1,22 @@
 const fs = require('fs-extra');
-const fileManager = require('./fileMannger');
+const FileManager = require('./fileManager');
+
+interface IEntryItem {
+  [key: string]: string;
+}
+interface IOutput {
+  path: string;
+  filename: string;
+}
+interface IConfig {
+  entryPathResolved: IEntryItem;
+  output: IOutput;
+}
 module.exports = class EasyRouter {
-  constructor(projectName, config) {
+  cwd: string;
+  config: IConfig;
+  entry: string;
+  constructor(projectName: string, config: IConfig) {
     this.cwd = process.cwd();
     this.config = config || this.getConfig();
     this.entry = void 0;
@@ -21,7 +36,7 @@ module.exports = class EasyRouter {
   }
 
   start() {
-    fileMannger();
+    const fileManager = new FileManager(this.entry);
     fs.readdir(this.entry, (err, info) => {
       console.log('info::', info);
       // this.

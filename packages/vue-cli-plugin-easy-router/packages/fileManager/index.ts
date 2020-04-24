@@ -1,8 +1,8 @@
-const { identityPromisify } = require('../utils');
-const { promisify } = require('util');
-const fs = require('fs-extra');
+import fs from 'fs-extra';
+import { promisify } from 'util';
 
-class FileMannger {
+class FileManager {
+  private path: string;
   constructor(path) {
     this.path = path;
   }
@@ -58,3 +58,4 @@ class FileMannger {
     return Promise.all(taskArray);
   }
 }
+module.exports = FileManager;

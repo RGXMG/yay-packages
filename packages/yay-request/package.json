@@ -1,5 +1,5 @@
 {
-  "name": "yay-request_copy",
+  "name": "yay-request",
   "version": "1.0.0",
   "description": "yay-request React component",
   "main": "lib/index.js",
@@ -22,9 +22,6 @@
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
-  },
-  "peerDependencies": {
-    "react": "16.x"
   },
   "devDependencies": {
     "antd": "^3.23.5",

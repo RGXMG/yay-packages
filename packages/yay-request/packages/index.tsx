@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosPromise } from 'axios';
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash/defaultsDeep';
 interface PathParam {
   path: {
     [key: string]: string;
@@ -16,7 +16,7 @@ type WithPathOpts = AxiosRequestConfig & PathParam;
 
 const instance = axios.create({
   withCredentials: true,
-  headers: { 'X-Requested-With': 'XMLHttpRequest' }
+  headers: { 'X-Requested-With': 'XMLHttpRequest' },
 });
 /**
  * 创建instance
@@ -25,16 +25,24 @@ const instance = axios.create({
  * @param baseURL
  */
 function createAPI<T>(baseURL?: string) {
-  return function (conf: AxiosRequestConfig & {
-    opts?: Partial<AxiosRequestConfig & PathParam & T>;
-  }):AxiosPromise {
+  return function(
+    conf: AxiosRequestConfig & {
+      opts?: Partial<AxiosRequestConfig & PathParam & T>;
+    }
+  ): AxiosPromise {
     conf = conf || {};
     // @ts-ignore
-    return instance(Object.assign({}, {
-      url: conf.url,
-      baseURL: baseURL,
-      method: conf.method
-    }, conf.opts));
+    return instance(
+      Object.assign(
+        {},
+        {
+          url: conf.url,
+          baseURL: baseURL,
+          method: conf.method,
+        },
+        conf.opts
+      )
+    );
   };
 }
 /**
@@ -47,7 +55,7 @@ function createAPI<T>(baseURL?: string) {
 function convertRESTAPI(url: string, opts: WithPathOpts) {
   if (!opts || !opts.path) return url;
   const pathKeys = Object.keys(opts.path);
-  pathKeys.forEach(function (key) {
+  pathKeys.forEach(function(key) {
     const r = new RegExp('(:' + key + '|{' + key + '})', 'g');
     url = url.replace(r, opts.path[key]);
   });
@@ -62,11 +70,17 @@ function concatUri(prefix: string) {
   return (end: string) => `${prefix}${end}`;
 }
 
-function useRequestInterceptor(beforeRequestHandler?: InterceptorHandler<AxiosRequestConfig>, errorHandler?: InterceptorErrorHandler) {
+function useRequestInterceptor(
+  beforeRequestHandler?: InterceptorHandler<AxiosRequestConfig>,
+  errorHandler?: InterceptorErrorHandler
+) {
   // @ts-ignore
   return instance.interceptors.request.use(beforeRequestHandler, errorHandler);
 }
-function useResponseInterceptor(successHandler?: InterceptorHandler<AxiosResponse>, errorHandler?: InterceptorErrorHandler) {
+function useResponseInterceptor(
+  successHandler?: InterceptorHandler<AxiosResponse>,
+  errorHandler?: InterceptorErrorHandler
+) {
   // @ts-ignore
   return instance.interceptors.response.use(successHandler, errorHandler);
 }
@@ -77,6 +91,15 @@ function ejectResponseInterceptor(interceptorId: number) {
   instance.interceptors.response.eject(interceptorId);
 }
 function mergeDefaults(...defaults: AxiosRequestConfig[]) {
-  return instance.defaults = defaultsDeep.apply(undefined, [instance.defaults].concat(defaults));
+  return (instance.defaults = defaultsDeep.apply(undefined, [instance.defaults].concat(defaults)));
 }
-export { createAPI, convertRESTAPI, concatUri, useRequestInterceptor, useResponseInterceptor, ejectRequestInterceptor, ejectResponseInterceptor, mergeDefaults };
+export {
+  createAPI,
+  convertRESTAPI,
+  concatUri,
+  useRequestInterceptor,
+  useResponseInterceptor,
+  ejectRequestInterceptor,
+  ejectResponseInterceptor,
+  mergeDefaults,
+};
