@@ -44,10 +44,13 @@ class FileManager{
     }
   }
 
-  async createFile(path, content) {
+  async createFile(path, content?:string) {
     try {
-      await fs.ensureFile(path);
-      await fs.outputFile(path, content);
+      if (content) {
+        await fs.outputFile(path, content);
+      } else {
+        await fs.ensureFile(path);
+      }
     } catch (e) {
       throw new Error(e);
     }

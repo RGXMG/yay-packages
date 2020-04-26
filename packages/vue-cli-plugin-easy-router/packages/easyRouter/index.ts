@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { IConfig as IProjectConfig } from '../project';
 import renderDynamicImport from './template';
 import FileManager from '../util/fileManager';
 
@@ -13,29 +14,34 @@ export interface IConfig {
 }
 class EasyRouter {
   config: IConfig;
+  // 项目的入口文件
+  projectConfig: IProjectConfig;
   entry: string;
   outputOpt: {
     path: string;
     filename: string;
   };
   outputFileManager: FileManager;
-  dynamicTemplateFileManager: FileManager;
-  tempFileManager: FileManager;
+  dynamicRouterFileManager: FileManager;
+  routerFileManger: FileManager;
+  tempFileManger: FileManager;
   projectDirList: Array<string>;
   renderContentList: Array<{
     name: string;
     content: string;
   }>;
   routersMap: object;
-  constructor(config?: IConfig) {
+  constructor(config: IConfig, projectConfig: IProjectConfig) {
     this.config = config;
+    this.projectConfig = projectConfig;
     this.entry = void 0;
     this.renderContentList = [];
     this.routersMap = {};
     this.init();
     this.createOutputFileManager();
+    this.createRouterFileManger();
     this.createTempFileManger();
-    this.createDynamicTemplateFileManager();
+    this.createDynamicRouterFileManager();
   }
 
   init() {
@@ -50,17 +56,20 @@ class EasyRouter {
     this.outputOpt = output;
   }
 
-  async start() {
+  async start(): Promise<{ routerPath: string }>  {
     try {
       const fileManager = new FileManager(this.entry);
       this.projectDirList = await fileManager.getDirLs();
       await this.compile();
       await this.generator();
-      this.routersMap = require(this.tempFileManager.path);
+      this.routersMap = require(this.tempFileManger.path);
       this.merge();
-      await this.output();
+      process.env.VUE_APP_CLI_EASY_SERVE_ROUTER = JSON.stringify(this.routersMap);
+      const routerPath = await this.output();
+      return { routerPath }
     } catch (e) {
       console.error(e);
+      return { routerPath: null }
     }
   }
   async compile() {
@@ -76,11 +85,13 @@ class EasyRouter {
       for (const [k, v] of Object.entries(this.routersMap)) {
         content += `${k}: ${v.toString()},`;
       }
-      await this.outputFileManager.writeContent(
-        `/* eslint-disable */ \n export default {${content}}`
-      );
-    } catch (e) {
+      const routerPath = path.join(__dirname, `template/router_${this.projectConfig.name}.js`);
+      await this.dynamicRouterFileManager.createFile(routerPath, `/* eslint-disable */ \n export default {${content}}`);
+      return routerPath;
+    }
+    catch (e) {
       console.error(e);
+      return null
     }
   }
   merge() {
@@ -106,22 +117,28 @@ class EasyRouter {
   }
   async generator() {
     try {
-      const content = await this.dynamicTemplateFileManager.readContent();
+      const content = await this.dynamicRouterFileManager.readContent();
       const renderContent = this.renderContentList.reduce(
         (str, { name, content }) => ((str += `${name}:${content},`), str),
         ''
       );
+
       const nContent = content.toString().replace('__placeholder__', renderContent);
-      await this.tempFileManager.writeContent(nContent);
+      await this.tempFileManger.writeContent(nContent);
+
     } catch (e) {
       console.error(e);
     }
   }
-  createTempFileManger() {
-    this.tempFileManager = new FileManager(path.join(__dirname, './template/temp.js'));
+  createRouterFileManger() {
+    this.routerFileManger = new FileManager(path.join(__dirname, './template/router.js'));
   }
-  createDynamicTemplateFileManager() {
-    this.dynamicTemplateFileManager = new FileManager(
+  createTempFileManger() {
+    this.tempFileManger = new FileManager(path.join(__dirname, './template/temp.js'));
+  }
+
+  createDynamicRouterFileManager() {
+    this.dynamicRouterFileManager = new FileManager(
       path.join(__dirname, './template/dynamicRouter')
     );
   }

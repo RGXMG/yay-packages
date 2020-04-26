@@ -14,5 +14,5 @@
     }
   },
   "include": [
-    "./packages1", "./types"]
+    "./packages", "./types"]
 }

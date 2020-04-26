@@ -67,9 +67,12 @@ class EasyServe {
   }
   async start() {
     // 处理router
-    await new EasyRouter(this.routerConfig).start();
-    // 处理project
-    return new Project(this.projectConfig);
+    const { routerPath } = await new EasyRouter(this.routerConfig, this.projectConfig).start();
+    if (routerPath) {
+      // 处理project
+      return new Project(this.projectConfig, routerPath).start();
+    }
+    throw new Error('handle router path fail');
   }
 }
 export default api => {
@@ -105,6 +108,7 @@ export default api => {
             ignore: ['/index.html', '.DS_Store'],
           },
         ]);
+        console.log(config);
         return {
           plugins: [copyPlugin],
         };

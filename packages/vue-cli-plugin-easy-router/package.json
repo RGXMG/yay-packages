@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn packages1/index.ts",
     "tsc": "npx tsc --build ./tsconfig_pro.json",
     "build": "nwb build-react-component --no-demo --copy-files",
-    "clean": "nwb clean-module && nwb clean-demo && node ./util/rmSrc.js",
+    "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run clean && npm run tsc && npm run build",
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
