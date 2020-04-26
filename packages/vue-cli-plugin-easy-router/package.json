@@ -2,10 +2,10 @@
   "name": "vue-cli-plugin-easy-router",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev": "node-ts/resgister",
-    "tsc": "tsc --build ./tsconfig_pro.json",
+    "dev": "ts-node-dev --respawn packages1/index.ts",
+    "tsc": "npx tsc --build ./tsconfig_pro.json",
     "build": "nwb build-react-component --no-demo --copy-files",
     "clean": "nwb clean-module && nwb clean-demo && node ./util/rmSrc.js",
     "prepublishOnly": "npm run clean && npm run tsc && npm run build",
@@ -18,10 +18,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^13.13.2",
     "node-ts": "^5.0.5",
     "nwb": "^0.23.0"
   },
   "dependencies": {
+    "@types/node": "^13.13.2",
     "ejs": "^3.0.1",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6"

@@ -1,0 +1,1 @@
+pathObj => () => import(/* webpackChunkName: "<%= chunkName %>" */ `<%= path %>${pathObj.<%= pathObjProperty %>}`)

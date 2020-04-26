@@ -1,8 +1,11 @@
 import fs from 'fs-extra';
+import * as globalFs from 'fs';
+import { Transform } from 'stream';
 import { promisify } from 'util';
 
-class FileManager {
-  private path: string;
+// @ts-ignore
+class FileManager{
+   path: string;
   constructor(path) {
     this.path = path;
   }
@@ -57,5 +60,35 @@ class FileManager {
     }
     return Promise.all(taskArray);
   }
+
+  createWriteStream() {
+    return globalFs.createWriteStream(this.path, 'utf8');
+  }
+
+//
+  pipe(object: (ITransform | IDuplex) & {highWaterMark?: number}) {
+    const keys = Object.keys(object);
+    if (keys.includes('transform')) {
+      const rs = globalFs.createReadStream(this.path, { flags: 'r', encoding: 'utf8' });
+      // @ts-ignore
+      return rs.pipe(new Transform(object));
+    }
+    return null;
+  }
+
+  readContent() {
+    return promisify(fs.readFile)(this.path);
+  }
+  writeContent(nContent) {
+    return promisify(fs.writeFile)(this.path, nContent, 'utf8')
+  }
+
 }
-module.exports = FileManager;
+interface ITransform {
+  transform: (chunk:string, encoding:string, callback: () => void) => void;
+}
+interface IDuplex {
+  read: void;
+  write: void
+}
+export default FileManager;
