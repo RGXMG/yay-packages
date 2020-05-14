@@ -1,0 +1,1 @@
+routerPath => () => import(/* webpackChunkName: "<%= chunkName %>" */ `<%= path %>${routerPath}`)
